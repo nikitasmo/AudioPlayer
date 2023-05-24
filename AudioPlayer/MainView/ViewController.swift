@@ -7,18 +7,39 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
+    var presenter = Presenter()
+    
     let mainView = MainView()
+    
+    var audioFiles = ["Dabro - На часах ноль-ноль"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view = mainView
         
-//        view.backgroundColor = .white
+        initialization()
+
         
+    }
+    
+    func initialization() {
+        for audioFile in audioFiles {
+            if let path = Bundle.main.path(forResource: audioFile, ofType: "mp3") {
+                let url = URL(fileURLWithPath: path)
+                do {
+                    let audioPlayer = try AVAudioPlayer(contentsOf: url)
+                    audioPlayer.prepareToPlay()
+                    presenter.addAudioInModel(audio: audioPlayer, name: audioFile)
+                } catch {
+                    print("Error loading file")
+                }
+            }
+        }
     }
 
 
