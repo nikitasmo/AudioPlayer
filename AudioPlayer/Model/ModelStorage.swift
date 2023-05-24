@@ -26,6 +26,10 @@ class ModelStorage {
         return model[0].audio
     }
     
+    func getAudioFromIndex(index: Int) -> AVAudioPlayer {
+        return model[index].audio
+    }
+    
     func getCountOfAudio() -> Int {
         return model.count
     }
@@ -36,5 +40,12 @@ class ModelStorage {
     
     func getDurationForIndex(index: Int) -> Double {
         return model[index].audio.duration
+    }
+    
+    func stopPlayAllAudio() {
+        for audiModel in model {
+            audiModel.audio.stop()
+            audiModel.audio.currentTime = 0
+        }
     }
 }

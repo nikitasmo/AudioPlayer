@@ -22,6 +22,10 @@ class Presenter {
         model.getAudio(withName: name)
     }
     
+    func getAudioFromIndex(index: Int) -> AVAudioPlayer {
+        model.getAudioFromIndex(index: index)
+    }
+    
     func getCountOfAudio() -> Int {
         return model.getCountOfAudio()
     }
@@ -33,4 +37,10 @@ class Presenter {
     func getDurationForIndex(index: Int) -> String {
         return String(format: "%.2f", model.getDurationForIndex(index: index) / 60)
     }
+    
+    func stopPlayAllAudio() {
+        model.stopPlayAllAudio()
+    }
+    
+    
 }

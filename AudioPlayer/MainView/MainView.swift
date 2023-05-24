@@ -12,6 +12,7 @@ protocol userActionMain: AnyObject {
     func getCountAudio() -> Int
     func getNameForIndex(index: Int) -> String
     func getDurationForIndex(index: Int) -> String
+    func playAudio(index: Int)
 }
 
 class MainView: UIView {
@@ -50,9 +51,9 @@ class MainView: UIView {
 
     //MARK: - UITableViewDelegate
 extension MainView: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 150
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.playAudio(index: indexPath.row)
+    }
 }
 
     //MARK: - UITableViewDataSource

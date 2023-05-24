@@ -47,6 +47,11 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: userActionMain {
+    func playAudio(index: Int) {
+        presenter.stopPlayAllAudio()
+        presenter.getAudioFromIndex(index: index).play()
+    }
+    
     func getDurationForIndex(index: Int) -> String {
         presenter.getDurationForIndex(index: index)
     }
