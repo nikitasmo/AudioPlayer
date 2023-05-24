@@ -26,4 +26,15 @@ class ModelStorage {
         return model[0].audio
     }
     
+    func getCountOfAudio() -> Int {
+        return model.count
+    }
+    
+    func getNameForIndex(index: Int) -> String {
+        return model[index].name
+    }
+    
+    func getDurationForIndex(index: Int) -> Double {
+        return model[index].audio.duration
+    }
 }

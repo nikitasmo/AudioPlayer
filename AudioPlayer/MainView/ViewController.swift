@@ -15,15 +15,16 @@ class ViewController: UIViewController {
     
     let mainView = MainView()
     
-    var audioFiles = ["Dabro - На часах ноль-ноль"]
+    var audioFiles = ["Dabro - На часах ноль-ноль", "Karna.val - Психушка"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mainView.delegate = self
+        
         view = mainView
         
         initialization()
-
         
     }
     
@@ -43,5 +44,20 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+extension ViewController: userActionMain {
+    func getDurationForIndex(index: Int) -> String {
+        presenter.getDurationForIndex(index: index)
+    }
+    
+    func getNameForIndex(index: Int) -> String {
+        presenter.getnameForIndex(index: index)
+    }
+    
+    func getCountAudio() -> Int {
+        presenter.getCountOfAudio()
+    }
+    
 }
 

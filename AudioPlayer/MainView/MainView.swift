@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol userActionMain: AnyObject {
+    func getCountAudio() -> Int
+    func getNameForIndex(index: Int) -> String
+    func getDurationForIndex(index: Int) -> String
+}
+
 class MainView: UIView {
+    
+    weak var delegate: userActionMain?
     
     //MARK: - Life cycle
 
@@ -33,6 +41,7 @@ class MainView: UIView {
         var tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.tableFooterView = UIView()
         return tableView
     }()
     
@@ -41,17 +50,22 @@ class MainView: UIView {
 
     //MARK: - UITableViewDelegate
 extension MainView: UITableViewDelegate {
-    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 150
+//    }
 }
 
     //MARK: - UITableViewDataSource
 extension MainView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return delegate?.getCountAudio() ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = MainTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        generateCell(cell: cell, index: indexPath.row)
+        
         return cell
     }
 }
@@ -66,6 +80,38 @@ extension MainView {
         MainTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         MainTableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         MainTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
+    }
+    
+    private func generateCell(cell: UITableViewCell, index: Int) {
+        let viewCell = UIView()
+        viewCell.translatesAutoresizingMaskIntoConstraints = false
+        
+        let labelName = UILabel()
+        labelName.text = delegate?.getNameForIndex(index: index)
+        labelName.translatesAutoresizingMaskIntoConstraints = false
+        
+        let labelDuration = UILabel()
+        labelDuration.text = delegate?.getDurationForIndex(index: index)
+        labelDuration.textAlignment = .right
+        labelDuration.translatesAutoresizingMaskIntoConstraints = false
+        
+        cell.contentView.addSubview(viewCell)
+        viewCell.addSubview(labelName)
+        viewCell.addSubview(labelDuration)
+        
+        viewCell.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+        viewCell.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+        viewCell.topAnchor.constraint(equalTo: cell.topAnchor).isActive = true
+        viewCell.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
+        
+        labelName.leadingAnchor.constraint(equalTo: viewCell.leadingAnchor, constant: 20).isActive = true
+        labelName.centerYAnchor.constraint(equalTo: viewCell.centerYAnchor).isActive = true
+        labelName.widthAnchor.constraint(equalTo: viewCell.widthAnchor, multiplier: 2/3).isActive = true
+        
+        labelDuration.leadingAnchor.constraint(equalTo: labelName.trailingAnchor).isActive = true
+        labelDuration.trailingAnchor.constraint(equalTo: viewCell.trailingAnchor, constant: -20).isActive = true
+        labelDuration.centerYAnchor.constraint(equalTo: viewCell.centerYAnchor).isActive = true
         
     }
     

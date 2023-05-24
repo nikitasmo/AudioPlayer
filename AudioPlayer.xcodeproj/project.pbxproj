@@ -11,6 +11,7 @@
 		112238B72A1DF1FD0000EF39 /* ModelStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238B62A1DF1FD0000EF39 /* ModelStorage.swift */; };
 		112238BA2A1DF4020000EF39 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238B92A1DF4020000EF39 /* Presenter.swift */; };
 		112238BD2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112238BC2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 */; };
+		112238BF2A1E03310000EF39 /* Karna.val - Психушка.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */; };
 		118F38AD2A1DD3B500DB61A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */; };
 		118F38AF2A1DD3B500DB61A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */; };
 		118F38B12A1DD3B500DB61A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38B02A1DD3B500DB61A5 /* ViewController.swift */; };
@@ -25,6 +26,7 @@
 		112238B62A1DF1FD0000EF39 /* ModelStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStorage.swift; sourceTree = "<group>"; };
 		112238B92A1DF4020000EF39 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		112238BC2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Dabro - На часах ноль-ноль.mp3"; sourceTree = "<group>"; };
+		112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Karna.val - Психушка.mp3"; sourceTree = "<group>"; };
 		118F38A92A1DD3B500DB61A5 /* AudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				112238BC2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 */,
+				112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				112238BD2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 in Resources */,
 				118F38B92A1DD3B700DB61A5 /* LaunchScreen.storyboard in Resources */,
 				118F38B62A1DD3B700DB61A5 /* Assets.xcassets in Resources */,
+				112238BF2A1E03310000EF39 /* Karna.val - Психушка.mp3 in Resources */,
 				118F38B42A1DD3B500DB61A5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
