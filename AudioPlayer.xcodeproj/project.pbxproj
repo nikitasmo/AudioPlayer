@@ -12,6 +12,8 @@
 		112238BA2A1DF4020000EF39 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238B92A1DF4020000EF39 /* Presenter.swift */; };
 		112238BD2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112238BC2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 */; };
 		112238BF2A1E03310000EF39 /* Karna.val - Психушка.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */; };
+		112238C32A1E25B90000EF39 /* ViewControllerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */; };
+		112238C52A1E25D00000EF39 /* ViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238C42A1E25D00000EF39 /* ViewPlayer.swift */; };
 		118F38AD2A1DD3B500DB61A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */; };
 		118F38AF2A1DD3B500DB61A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */; };
 		118F38B12A1DD3B500DB61A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38B02A1DD3B500DB61A5 /* ViewController.swift */; };
@@ -27,6 +29,8 @@
 		112238B92A1DF4020000EF39 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		112238BC2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Dabro - На часах ноль-ноль.mp3"; sourceTree = "<group>"; };
 		112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Karna.val - Психушка.mp3"; sourceTree = "<group>"; };
+		112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerPlayer.swift; sourceTree = "<group>"; };
+		112238C42A1E25D00000EF39 /* ViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPlayer.swift; sourceTree = "<group>"; };
 		118F38A92A1DD3B500DB61A5 /* AudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +79,25 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+		112238C02A1E16950000EF39 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				118F38C02A1DD7CF00DB61A5 /* MainView */,
+				112238B82A1DF3EF0000EF39 /* Presenter */,
+				112238B32A1DF1660000EF39 /* Model */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		112238C12A1E16D00000EF39 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				112238C42A1E25D00000EF39 /* ViewPlayer.swift */,
+				112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		118F38A02A1DD3B500DB61A5 = {
 			isa = PBXGroup;
 			children = (
@@ -94,10 +117,9 @@
 		118F38AB2A1DD3B500DB61A5 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				112238C02A1E16950000EF39 /* Main */,
+				112238C12A1E16D00000EF39 /* Player */,
 				112238BB2A1DFE3D0000EF39 /* Sound */,
-				118F38C02A1DD7CF00DB61A5 /* MainView */,
-				112238B82A1DF3EF0000EF39 /* Presenter */,
-				112238B32A1DF1660000EF39 /* Model */,
 				118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */,
 				118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */,
 				118F38B22A1DD3B500DB61A5 /* Main.storyboard */,
@@ -191,6 +213,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				118F38B12A1DD3B500DB61A5 /* ViewController.swift in Sources */,
+				112238C32A1E25B90000EF39 /* ViewControllerPlayer.swift in Sources */,
+				112238C52A1E25D00000EF39 /* ViewPlayer.swift in Sources */,
 				112238BA2A1DF4020000EF39 /* Presenter.swift in Sources */,
 				118F38C22A1DDE4200DB61A5 /* MainView.swift in Sources */,
 				118F38AD2A1DD3B500DB61A5 /* AppDelegate.swift in Sources */,

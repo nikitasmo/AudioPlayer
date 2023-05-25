@@ -42,5 +42,20 @@ class Presenter {
         model.stopPlayAllAudio()
     }
     
+    func playingAudioCheck(index: Int) -> Bool {
+        model.playingAudioCheck(index: index)
+    }
+    
+    func getIndexPlayingAudio() -> Int {
+        model.getIndexPlayingAudio()
+    }
+    
+    func stopAudioFromIndex(index: Int) {
+        model.stopAudiofromIndex(index: index)
+    }
+    
+    func continuePlay(index: Int) {
+        model.continuePlayFromIndex(index: index)
+    }
     
 }

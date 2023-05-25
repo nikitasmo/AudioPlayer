@@ -11,6 +11,8 @@ import AVFoundation
 
 class ViewController: UIViewController {
     
+    var vcPlayer = ViewControllerPlayer()
+    
     var presenter = Presenter()
     
     let mainView = MainView()
@@ -21,6 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         mainView.delegate = self
+        vcPlayer.delegate = self
         
         view = mainView
         
@@ -48,8 +51,13 @@ class ViewController: UIViewController {
 
 extension ViewController: userActionMain {
     func playAudio(index: Int) {
-        presenter.stopPlayAllAudio()
-        presenter.getAudioFromIndex(index: index).play()
+        
+        if presenter.playingAudioCheck(index: index) == false {
+            presenter.stopPlayAllAudio()
+            presenter.getAudioFromIndex(index: index).play()
+        }
+        
+        self.present(vcPlayer, animated: true, completion: nil)
     }
     
     func getDurationForIndex(index: Int) -> String {
@@ -66,3 +74,21 @@ extension ViewController: userActionMain {
     
 }
 
+extension ViewController: vcPlayerTovcMain {
+    func continuePlay(index: Int) {
+        presenter.continuePlay(index: index)
+    }
+    
+    func playingCheck(index: Int) -> Bool {
+        presenter.playingAudioCheck(index: index)
+    }
+    
+    func stopPlaying(index: Int) {
+        presenter.stopAudioFromIndex(index: index)
+    }
+    
+    func getIndexPlayingAudio() -> Int {
+        presenter.getIndexPlayingAudio()
+    }
+    
+}

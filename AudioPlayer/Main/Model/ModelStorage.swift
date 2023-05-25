@@ -48,4 +48,29 @@ class ModelStorage {
             audiModel.audio.currentTime = 0
         }
     }
+    
+    func playingAudioCheck(index: Int) -> Bool {
+        if model[index].audio.isPlaying == true {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getIndexPlayingAudio() -> Int {
+        for i in 0...model.count {
+            if model[i].audio.isPlaying == true {
+                return i
+            }
+        }
+        return 0
+    }
+    
+    func stopAudiofromIndex(index: Int) {
+        model[index].audio.stop()
+    }
+    
+    func continuePlayFromIndex (index: Int) {
+        model[index].audio.play()
+    }
 }
