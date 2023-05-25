@@ -12,6 +12,7 @@ protocol vcPlayerTovcMain: AnyObject {
     func getIndexPlayingAudio() -> Int
     func getDurationCurrentAudio(index: Int) -> Double
     func getCurrentTimeOfIndex(index: Int) -> Double
+    func getNameForIndex(index: Int) -> String
     func stopPlaying(index: Int)
     func playingCheck(index: Int) -> Bool
     func continuePlay(index: Int)
@@ -51,8 +52,11 @@ class ViewControllerPlayer: UIViewController {
         
         durationCurrentAudio = delegate?.getDurationCurrentAudio(index: currentAudio) ?? 0
         
-//        viewPlayer.labelDuration.text = String(format: "%.2f", durationCurrentAudio / 60)
         viewPlayer.labelDuration.text = formatter.string(from: durationCurrentAudio)
+        
+        viewPlayer.labelName.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[1]
+        
+        viewPlayer.labelAuthor.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[0]
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }

@@ -25,6 +25,8 @@ class ViewPlayer: UIView {
         self.addSubview(progresView)
         self.addSubview(labelCurrentTime)
         self.addSubview(labelDuration)
+        self.addSubview(labelName)
+        self.addSubview(labelAuthor)
         
         configConstraint()
     }
@@ -68,6 +70,21 @@ class ViewPlayer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    var labelAuthor: UILabel = {
+        var label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var labelName: UILabel = {
+        var label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 }
 
 extension ViewPlayer {
@@ -92,6 +109,16 @@ extension ViewPlayer {
         labelDuration.trailingAnchor.constraint(equalTo: progresView.trailingAnchor).isActive = true
         labelDuration.bottomAnchor.constraint(equalTo: progresView.topAnchor, constant: -20).isActive = true
         labelDuration.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        labelAuthor.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        labelAuthor.bottomAnchor.constraint(equalTo: progresView.topAnchor, constant: -100).isActive = true
+        labelAuthor.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        labelAuthor.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        
+        labelName.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        labelName.bottomAnchor.constraint(equalTo: labelAuthor.topAnchor, constant: -20).isActive = true
+        labelName.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        labelName.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
     }
     
     @objc func touchCloseButton() {
