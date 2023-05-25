@@ -71,4 +71,6 @@ class Presenter {
         model.getCurrentTimeOfIndex(index: index)
     }
     
+
+    
 }

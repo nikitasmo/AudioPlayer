@@ -58,7 +58,7 @@ class ModelStorage {
     }
     
     func getIndexPlayingAudio() -> Int {
-        for i in 0...model.count {
+        for i in 0...(model.count - 1) {
             if model[i].audio.isPlaying == true {
                 return i
             }
@@ -77,4 +77,6 @@ class ModelStorage {
     func getCurrentTimeOfIndex(index: Int) -> Double {
         model[index].audio.currentTime
     }
+    
+
 }

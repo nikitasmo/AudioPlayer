@@ -52,8 +52,10 @@ class ViewController: UIViewController {
 extension ViewController: userActionMain {
     func playAudio(index: Int) {
         
-        if presenter.playingAudioCheck(index: index) == false {
+        if presenter.playingAudioCheck(index: index) == false && index != vcPlayer.currentAudio{
             presenter.stopPlayAllAudio()
+            presenter.getAudioFromIndex(index: index).play()
+        } else {
             presenter.getAudioFromIndex(index: index).play()
         }
         
