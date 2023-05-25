@@ -22,6 +22,9 @@ class ViewPlayer: UIView {
         
         self.addSubview(buttonClose)
         self.addSubview(buttonPlay)
+        self.addSubview(progresView)
+        self.addSubview(labelCurrentTime)
+        self.addSubview(labelDuration)
         
         configConstraint()
     }
@@ -46,6 +49,25 @@ class ViewPlayer: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    var progresView: UIProgressView = {
+        var progressView = UIProgressView(progressViewStyle: .default)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
+    }()
+    
+    var labelCurrentTime: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var labelDuration: UILabel = {
+        var label = UILabel()
+        label.textAlignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 }
 
 extension ViewPlayer {
@@ -57,6 +79,19 @@ extension ViewPlayer {
         
         buttonPlay.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         buttonPlay.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -200).isActive = true
+        
+        progresView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
+        progresView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        progresView.bottomAnchor.constraint(equalTo: buttonPlay.topAnchor, constant: -10).isActive = true
+        progresView.heightAnchor.constraint(equalToConstant: 5).isActive = true
+        
+        labelCurrentTime.leadingAnchor.constraint(equalTo: progresView.leadingAnchor).isActive = true
+        labelCurrentTime.bottomAnchor.constraint(equalTo: progresView.topAnchor, constant: -20).isActive = true
+        labelCurrentTime.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        labelDuration.trailingAnchor.constraint(equalTo: progresView.trailingAnchor).isActive = true
+        labelDuration.bottomAnchor.constraint(equalTo: progresView.topAnchor, constant: -20).isActive = true
+        labelDuration.widthAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
     @objc func touchCloseButton() {

@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     
     let mainView = MainView()
     
-    var audioFiles = ["Dabro - На часах ноль-ноль", "Karna.val - Психушка"]
+    var audioFiles = ["Dabro - На часах ноль-ноль", "Karna.val - Психушка", "NILETTO - Ты такая красивая"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +75,14 @@ extension ViewController: userActionMain {
 }
 
 extension ViewController: vcPlayerTovcMain {
+    func getCurrentTimeOfIndex(index: Int) -> Double {
+        presenter.getCurrentTimeOfIndex(index: index)
+    }
+    
+    func getDurationCurrentAudio(index: Int) -> Double {
+        presenter.getDurationForIndexDouble(index: index)
+    }
+    
     func continuePlay(index: Int) {
         presenter.continuePlay(index: index)
     }

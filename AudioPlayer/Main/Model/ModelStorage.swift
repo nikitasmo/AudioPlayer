@@ -73,4 +73,8 @@ class ModelStorage {
     func continuePlayFromIndex (index: Int) {
         model[index].audio.play()
     }
+    
+    func getCurrentTimeOfIndex(index: Int) -> Double {
+        model[index].audio.currentTime
+    }
 }

@@ -10,6 +10,8 @@ import UIKit
 
 protocol vcPlayerTovcMain: AnyObject {
     func getIndexPlayingAudio() -> Int
+    func getDurationCurrentAudio(index: Int) -> Double
+    func getCurrentTimeOfIndex(index: Int) -> Double
     func stopPlaying(index: Int)
     func playingCheck(index: Int) -> Bool
     func continuePlay(index: Int)
@@ -17,11 +19,17 @@ protocol vcPlayerTovcMain: AnyObject {
 
 class ViewControllerPlayer: UIViewController {
     
+    let formatter = DateComponentsFormatter()
+    
+    var timer: Timer?
+    
     weak var delegate: vcPlayerTovcMain?
     
     var viewPlayer = ViewPlayer()
     
     var currentAudio = Int()
+    
+    var durationCurrentAudio = Double()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +48,29 @@ class ViewControllerPlayer: UIViewController {
         viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         
         currentAudio = delegate?.getIndexPlayingAudio() ?? 0
+        
+        durationCurrentAudio = delegate?.getDurationCurrentAudio(index: currentAudio) ?? 0
+        
+//        viewPlayer.labelDuration.text = String(format: "%.2f", durationCurrentAudio / 60)
+        viewPlayer.labelDuration.text = formatter.string(from: durationCurrentAudio)
+        
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }
 
+}
+
+extension ViewControllerPlayer {
+    
+
+    
+    @objc func updateProgressView() {
+        viewPlayer.progresView.progress = Float((delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0)/durationCurrentAudio)
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0))
+        
+    }
 }
 
 extension ViewControllerPlayer: viewPlayerToVc {

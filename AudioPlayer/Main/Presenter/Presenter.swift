@@ -12,6 +12,8 @@ import AVFoundation
 
 class Presenter {
     
+    let formatter = DateComponentsFormatter()
+    
     var model = ModelStorage()
     
     func addAudioInModel(audio: AVAudioPlayer, name: String) {
@@ -35,7 +37,14 @@ class Presenter {
     }
     
     func getDurationForIndex(index: Int) -> String {
-        return String(format: "%.2f", model.getDurationForIndex(index: index) / 60)
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter.string(from: model.getDurationForIndex(index: index)) ?? ""
+    }
+    
+    func getDurationForIndexDouble(index: Int) -> Double {
+        return model.getDurationForIndex(index: index)
     }
     
     func stopPlayAllAudio() {
@@ -56,6 +65,10 @@ class Presenter {
     
     func continuePlay(index: Int) {
         model.continuePlayFromIndex(index: index)
+    }
+    
+    func getCurrentTimeOfIndex(index: Int) -> Double {
+        model.getCurrentTimeOfIndex(index: index)
     }
     
 }
