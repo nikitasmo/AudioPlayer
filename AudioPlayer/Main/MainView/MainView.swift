@@ -15,7 +15,7 @@ protocol userActionMain: AnyObject {
     func playAudio(index: Int)
 }
 
-class MainView: UIView {
+final class MainView: UIView {
     
     weak var delegate: userActionMain?
     

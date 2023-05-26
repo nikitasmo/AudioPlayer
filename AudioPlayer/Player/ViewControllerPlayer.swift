@@ -24,7 +24,7 @@ protocol vcPlayerTovcMain: AnyObject {
     func playPreviousAudio(index: Int)
 }
 
-class ViewControllerPlayer: UIViewController {
+final class ViewControllerPlayer: UIViewController {
     
     let formatter = DateComponentsFormatter()
     

@@ -14,7 +14,7 @@ protocol IViewController: AnyObject {
     func playNewAudio(index: Int)
 }
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     var vcPlayer = ViewControllerPlayer()
     
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
 
 }
 
-//MARK: - ViewControllerProtocol
+//MARK: - IViewController
 extension ViewController: IViewController {
     
     func initialization() {  //подготавливает треки к проигрыванию и вызывает функцию загрузки их в модель

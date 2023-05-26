@@ -9,21 +9,12 @@
 import Foundation
 import AVFoundation
 
-class ModelStorage {
+final class ModelStorage {
     
-    var model = [AudioModel]()
+    private var model = [AudioModel]()
     
     func addNewModel(audio: AVAudioPlayer, name: String) {
         model.append(AudioModel(audio: audio, name: name))
-    }
-    
-    func getAudio(withName: String) -> AVAudioPlayer {
-        for audioModel in model {
-            if audioModel.name == withName {
-                return audioModel.audio
-            }
-        }
-        return model[0].audio
     }
     
     func getAudioFromIndex(index: Int) -> AVAudioPlayer {

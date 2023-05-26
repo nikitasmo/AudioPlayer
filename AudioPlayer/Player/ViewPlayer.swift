@@ -15,7 +15,7 @@ protocol viewPlayerToVc: AnyObject {
     func buttonBackwardPressed()
 }
 
-class ViewPlayer: UIView {
+final class ViewPlayer: UIView {
     
     weak var delegate: viewPlayerToVc?
     

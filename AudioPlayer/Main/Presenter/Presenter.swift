@@ -12,7 +12,6 @@ import AVFoundation
 
 protocol IPresenter: AnyObject {
     func addAudioInModel(audio: AVAudioPlayer, name: String)
-    func getAudio(name: String) -> AVAudioPlayer
     func getAudioFromIndex(index: Int) -> AVAudioPlayer
     func getCountOfAudio() -> Int
     func getnameForIndex(index: Int) -> String
@@ -26,65 +25,61 @@ protocol IPresenter: AnyObject {
     func getCurrentTimeOfIndex(index: Int) -> Double
 }
 
-class Presenter: IPresenter {
+final class Presenter: IPresenter {
     
-    let formatter = DateComponentsFormatter()
+    private let formatter = DateComponentsFormatter()
     
-    var model = ModelStorage()
+    private var modelStorage = ModelStorage()
     
     func addAudioInModel(audio: AVAudioPlayer, name: String) {
-        model.addNewModel(audio: audio, name: name)
-    }
-    
-    func getAudio(name: String) -> AVAudioPlayer {
-        model.getAudio(withName: name)
+        modelStorage.addNewModel(audio: audio, name: name)
     }
     
     func getAudioFromIndex(index: Int) -> AVAudioPlayer {
-        model.getAudioFromIndex(index: index)
+        modelStorage.getAudioFromIndex(index: index)
     }
     
     func getCountOfAudio() -> Int {
-        return model.getCountOfAudio()
+        return modelStorage.getCountOfAudio()
     }
     
     func getnameForIndex(index: Int) -> String {
-        return model.getNameForIndex(index: index)
+        return modelStorage.getNameForIndex(index: index)
     }
     
     func getDurationForIndex(index: Int) -> String {
         formatter.allowedUnits = [.minute, .second]
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = .pad
-        return formatter.string(from: model.getDurationForIndex(index: index)) ?? ""
+        return formatter.string(from: modelStorage.getDurationForIndex(index: index)) ?? ""
     }
     
     func getDurationForIndexDouble(index: Int) -> Double {
-        return model.getDurationForIndex(index: index)
+        return modelStorage.getDurationForIndex(index: index)
     }
     
     func stopPlayAllAudio() {
-        model.stopPlayAllAudio()
+        modelStorage.stopPlayAllAudio()
     }
     
     func playingAudioCheck(index: Int) -> Bool {
-        model.playingAudioCheck(index: index)
+        modelStorage.playingAudioCheck(index: index)
     }
     
     func getIndexPlayingAudio() -> Int {
-        model.getIndexPlayingAudio()
+        modelStorage.getIndexPlayingAudio()
     }
     
     func stopAudioFromIndex(index: Int) {
-        model.stopAudiofromIndex(index: index)
+        modelStorage.stopAudiofromIndex(index: index)
     }
     
     func continuePlay(index: Int) {
-        model.continuePlayFromIndex(index: index)
+        modelStorage.continuePlayFromIndex(index: index)
     }
     
     func getCurrentTimeOfIndex(index: Int) -> Double {
-        model.getCurrentTimeOfIndex(index: index)
+        modelStorage.getCurrentTimeOfIndex(index: index)
     }
     
 
