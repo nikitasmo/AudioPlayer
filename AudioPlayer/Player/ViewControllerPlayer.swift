@@ -83,6 +83,11 @@ extension ViewControllerPlayer {
         formatter.zeroFormattingBehavior = .pad
         viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0))
         
+        if delegate?.playingCheck(index: currentAudio) == false && delegate?.getCurrentTimeOfIndex(index: currentAudio) == 0 {
+            delegate?.playNextAudio(index: currentAudio)
+            initialization()
+        }
+        
     }
 }
 
