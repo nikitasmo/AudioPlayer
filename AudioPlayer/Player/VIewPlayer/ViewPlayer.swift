@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol viewPlayerToVc: AnyObject {
+protocol viewPlayerDelegate: AnyObject {
     func buttonClosePressed()
     func buttonPlayPressed()
     func buttonForwardPressed()
@@ -17,7 +17,7 @@ protocol viewPlayerToVc: AnyObject {
 
 final class ViewPlayer: UIView {
     
-    weak var delegate: viewPlayerToVc?
+    weak var delegate: viewPlayerDelegate?
     
 //MARK: - life cycle
     override init(frame: CGRect) {

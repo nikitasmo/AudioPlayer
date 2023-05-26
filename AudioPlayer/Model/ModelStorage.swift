@@ -11,7 +11,13 @@ import AVFoundation
 
 final class ModelStorage {
     
+    private init() {}
+    
+    static let shared = ModelStorage()
+    
     private var model = [AudioModel]()
+    
+    private var currentAudio = Int()
     
     func addNewModel(audio: AVAudioPlayer, name: String) {
         model.append(AudioModel(audio: audio, name: name))
@@ -69,5 +75,12 @@ final class ModelStorage {
         model[index].audio.currentTime
     }
     
+    func getCurrentAudio() -> Int {
+        currentAudio
+    }
+    
+    func setCurrentAudio(index: Int) {
+        currentAudio = index
+    }
 
 }

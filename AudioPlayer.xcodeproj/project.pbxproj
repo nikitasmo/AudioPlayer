@@ -23,6 +23,7 @@
 		118F38B62A1DD3B700DB61A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118F38B52A1DD3B700DB61A5 /* Assets.xcassets */; };
 		118F38B92A1DD3B700DB61A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118F38B72A1DD3B700DB61A5 /* LaunchScreen.storyboard */; };
 		118F38C22A1DDE4200DB61A5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38C12A1DDE4200DB61A5 /* MainView.swift */; };
+		11B802B82A20A9F500E76E24 /* PresenterPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B802B72A20A9F500E76E24 /* PresenterPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		118F38B82A1DD3B700DB61A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		118F38BA2A1DD3B700DB61A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118F38C12A1DDE4200DB61A5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		11B802B72A20A9F500E76E24 /* PresenterPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +93,6 @@
 			children = (
 				118F38C02A1DD7CF00DB61A5 /* MainView */,
 				112238B82A1DF3EF0000EF39 /* Presenter */,
-				112238B32A1DF1660000EF39 /* Model */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -99,8 +100,8 @@
 		112238C12A1E16D00000EF39 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				112238C42A1E25D00000EF39 /* ViewPlayer.swift */,
-				112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */,
+				11B802B52A20A9BC00E76E24 /* VIewPlayer */,
+				11B802B62A20A9CD00E76E24 /* PresenterPlayer */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -126,6 +127,7 @@
 			children = (
 				112238C02A1E16950000EF39 /* Main */,
 				112238C12A1E16D00000EF39 /* Player */,
+				112238B32A1DF1660000EF39 /* Model */,
 				112238BB2A1DFE3D0000EF39 /* Sound */,
 				118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */,
 				118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */,
@@ -143,6 +145,23 @@
 				118F38B02A1DD3B500DB61A5 /* ViewController.swift */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		11B802B52A20A9BC00E76E24 /* VIewPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				112238C42A1E25D00000EF39 /* ViewPlayer.swift */,
+				112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */,
+			);
+			path = VIewPlayer;
+			sourceTree = "<group>";
+		};
+		11B802B62A20A9CD00E76E24 /* PresenterPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				11B802B72A20A9F500E76E24 /* PresenterPlayer.swift */,
+			);
+			path = PresenterPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +244,7 @@
 				112238C52A1E25D00000EF39 /* ViewPlayer.swift in Sources */,
 				112238BA2A1DF4020000EF39 /* Presenter.swift in Sources */,
 				118F38C22A1DDE4200DB61A5 /* MainView.swift in Sources */,
+				11B802B82A20A9F500E76E24 /* PresenterPlayer.swift in Sources */,
 				118F38AD2A1DD3B500DB61A5 /* AppDelegate.swift in Sources */,
 				118F38AF2A1DD3B500DB61A5 /* SceneDelegate.swift in Sources */,
 				112238B52A1DF1900000EF39 /* AudioModel.swift in Sources */,

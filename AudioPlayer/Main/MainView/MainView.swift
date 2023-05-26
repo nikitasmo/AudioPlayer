@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol userActionMain: AnyObject {
+protocol MainViewDelegate: AnyObject {
     func getCountAudio() -> Int
     func getNameForIndex(index: Int) -> String
     func getDurationForIndex(index: Int) -> String
-    func playAudio(index: Int)
+    func touchUpCell(index: Int)
 }
 
 final class MainView: UIView {
     
-    weak var delegate: userActionMain?
+    weak var delegate: MainViewDelegate?
     
     //MARK: - Life cycle
 
@@ -52,7 +52,7 @@ final class MainView: UIView {
     //MARK: - UITableViewDelegate
 extension MainView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.playAudio(index: indexPath.row)
+        delegate?.touchUpCell(index: indexPath.row)
     }
 }
 

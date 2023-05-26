@@ -12,16 +12,8 @@ protocol IViewControllerPlay: AnyObject {
     func initialization()
 }
 
-protocol vcPlayerTovcMain: AnyObject {
-    func getIndexPlayingAudio() -> Int
-    func getDurationCurrentAudio(index: Int) -> Double
-    func getCurrentTimeOfIndex(index: Int) -> Double
-    func getNameForIndex(index: Int) -> String
-    func stopPlaying(index: Int)
-    func playingCheck(index: Int) -> Bool
-    func continuePlay(index: Int)
-    func playNextAudio(index: Int)
-    func playPreviousAudio(index: Int)
+protocol ViewControllerPlayerDelegate: AnyObject {
+   
 }
 
 final class ViewControllerPlayer: UIViewController {
@@ -30,17 +22,19 @@ final class ViewControllerPlayer: UIViewController {
     
     var timer: Timer?
     
-    weak var delegate: vcPlayerTovcMain?
+    weak var delegate: ViewControllerPlayerDelegate?
     
     var viewPlayer = ViewPlayer()
-    
-    var currentAudio = Int()
     
     var durationCurrentAudio = Double()
     
     override var shouldAutorotate: Bool {
         return false
     }
+    
+    lazy var presenterPlayer: IPresenterPlayer = {
+       return PresenterPlayer(view: self)
+    }()
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -66,20 +60,23 @@ final class ViewControllerPlayer: UIViewController {
 //MARK: - IVewControllerPlay
 extension ViewControllerPlayer: IViewControllerPlay {
     
+    
+    
     func initialization() {
         
         viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)  //меняем иконку кнопки на "пауза"
         
-        currentAudio = delegate?.getIndexPlayingAudio() ?? 0   //запрашиваем трек, который начал играть
+//        currentAudio = presenterPlayer.getIndexPlayingAudio()   //запрашиваем трек, который начал играть
+        ModelStorage.shared.setCurrentAudio(index: presenterPlayer.getIndexPlayingAudio())
         
-        durationCurrentAudio = delegate?.getDurationCurrentAudio(index: currentAudio) ?? 0   //запрашиваем длительность трека
+        durationCurrentAudio = presenterPlayer.getDurationCurrentAudioDouble(index: ModelStorage.shared.getCurrentAudio())   //запрашиваем длительность трека
         
         //устанавливаем на лейблы информацию
         viewPlayer.labelDuration.text = formatter.string(from: durationCurrentAudio)
         
-        viewPlayer.labelName.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[1]
+        viewPlayer.labelName.text = presenterPlayer.getNameForIndex(index: ModelStorage.shared.getCurrentAudio()).components(separatedBy: " - ")[1]
         
-        viewPlayer.labelAuthor.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[0]
+        viewPlayer.labelAuthor.text = presenterPlayer.getNameForIndex(index: ModelStorage.shared.getCurrentAudio()).components(separatedBy: " - ")[0]
         
         //запускаем таймер для обновления progressView
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
@@ -88,24 +85,25 @@ extension ViewControllerPlayer: IViewControllerPlay {
 
 }
 
-//MARK: -viewPlayerToVc
-extension ViewControllerPlayer: viewPlayerToVc {
+//MARK: -viewPlayerDelegate
+extension ViewControllerPlayer: viewPlayerDelegate {
     func buttonBackwardPressed() {  //выызвается при нажатии кнопки "предыдущее аудио"
-        delegate?.playPreviousAudio(index: currentAudio)
+        presenterPlayer.playPreviousAudio(index: ModelStorage.shared.getCurrentAudio())
         initialization()
     }
     
     func buttonForwardPressed() {  //вызывается при нажатии кнопки "следующее аудио"
-        delegate?.playNextAudio(index: currentAudio)
+        presenterPlayer.playNextAudio(index: ModelStorage.shared.getCurrentAudio())
+        
         initialization()
     }
     
     func buttonPlayPressed() { //вызываетс при нажатии кнопки play
-        if delegate?.playingCheck(index: currentAudio) == true { //выполняется в случае, если музыка играет сейчас
-            delegate?.stopPlaying(index: currentAudio)
+        if presenterPlayer.playingCheck(index: ModelStorage.shared.getCurrentAudio()) == true { //выполняется в случае, если музыка играет сейчас
+            presenterPlayer.stopPlaying(index: ModelStorage.shared.getCurrentAudio())
             viewPlayer.buttonPlay.setImage(UIImage(systemName: "play.fill"), for: .normal)
         } else {                                                //выполняется если сузыка стоит на паузе
-            delegate?.continuePlay(index: currentAudio)
+            presenterPlayer.continuePlay(index: ModelStorage.shared.getCurrentAudio())
             viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         }
     }
@@ -120,18 +118,18 @@ extension ViewControllerPlayer: viewPlayerToVc {
 private extension ViewControllerPlayer {
     
     @objc func updateProgressView() { //обновляем progressView
-        viewPlayer.progresView.progress = Float((delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0)/durationCurrentAudio) //вычисляем новое значение для progressView
+        viewPlayer.progresView.progress = Float((presenterPlayer.getCurrentTimeOfIndex(index: ModelStorage.shared.getCurrentAudio()))/durationCurrentAudio) //вычисляем новое значение для progressView
         //настраиваем форматтер для правильного отображения времени
         formatter.allowedUnits = [.minute, .second]
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = .pad
         
         //устанавливаем текущее время музыки
-        viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0))
+        viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(presenterPlayer.getCurrentTimeOfIndex(index: ModelStorage.shared.getCurrentAudio())))
         
         //если текущая музыка не играет и не стоит на паузе, включаем следующий трек
-        if delegate?.playingCheck(index: currentAudio) == false && delegate?.getCurrentTimeOfIndex(index: currentAudio) == 0 {
-            delegate?.playNextAudio(index: currentAudio)
+        if presenterPlayer.playingCheck(index: ModelStorage.shared.getCurrentAudio()) == false && presenterPlayer.getCurrentTimeOfIndex(index: ModelStorage.shared.getCurrentAudio()) == 0 {
+            presenterPlayer.playNextAudio(index: ModelStorage.shared.getCurrentAudio())
             initialization()
         }
         
