@@ -23,7 +23,7 @@ protocol IPresenterPlayer: AnyObject {
     func playNextAudio(index: Int)
     func playPreviousAudio(index: Int)
     func viewWillAppear()
-    func buttonPlyaPressed()
+    func buttonPlayPressed()
 }
 
 final class PresenterPlayer {
@@ -124,7 +124,7 @@ extension PresenterPlayer {
         viewWillAppear()
     }
     
-    func buttonPlyaPressed() {
+    func buttonPlayPressed() {
         if playingCheck(index: ModelStorage.shared.getCurrentAudio()) == true { //выполняется в случае, если музыка играет сейчас
             stopPlaying(index: ModelStorage.shared.getCurrentAudio())
             view?.setImageButtonPlayToPlay()

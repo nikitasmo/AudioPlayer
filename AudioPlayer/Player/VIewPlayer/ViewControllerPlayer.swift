@@ -106,7 +106,7 @@ extension ViewControllerPlayer: viewPlayerDelegate {
     }
     
     func buttonPlayPressed() { //вызываетс при нажатии кнопки play
-        presenterPlayer.buttonPlyaPressed()
+        presenterPlayer.buttonPlayPressed()
     }
     
     func buttonClosePressed() {
