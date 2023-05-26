@@ -10,7 +10,23 @@ import Foundation
 import AVFoundation
 
 
-class Presenter {
+protocol IPresenter: AnyObject {
+    func addAudioInModel(audio: AVAudioPlayer, name: String)
+    func getAudio(name: String) -> AVAudioPlayer
+    func getAudioFromIndex(index: Int) -> AVAudioPlayer
+    func getCountOfAudio() -> Int
+    func getnameForIndex(index: Int) -> String
+    func getDurationForIndex(index: Int) -> String
+    func getDurationForIndexDouble(index: Int) -> Double
+    func stopPlayAllAudio()
+    func playingAudioCheck(index: Int) -> Bool
+    func getIndexPlayingAudio() -> Int
+    func stopAudioFromIndex(index: Int)
+    func continuePlay(index: Int)
+    func getCurrentTimeOfIndex(index: Int) -> Double
+}
+
+class Presenter: IPresenter {
     
     let formatter = DateComponentsFormatter()
     

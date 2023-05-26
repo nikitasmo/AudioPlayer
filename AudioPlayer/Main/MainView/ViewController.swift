@@ -9,16 +9,29 @@
 import UIKit
 import AVFoundation
 
+protocol IViewController: AnyObject {
+    func initialization()
+    func playNewAudio(index: Int)
+}
+
 class ViewController: UIViewController {
     
     var vcPlayer = ViewControllerPlayer()
     
-    var presenter = Presenter()
-    
     let mainView = MainView()
     
     var audioFiles = ["Dabro - На часах ноль-ноль", "Karna.val - Психушка", "NILETTO - Ты такая красивая", "Rauf & Faik, NILETTO - Если тебе будет грустно", "T-killah, Matara - Люби меня люби"]
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    //MARK: - Dependency
+    var presenter: IPresenter = {
+        return Presenter()
+    }()
 
+    //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,8 +43,13 @@ class ViewController: UIViewController {
         initialization()
         
     }
+
+}
+
+//MARK: - ViewControllerProtocol
+extension ViewController: IViewController {
     
-    func initialization() {
+    func initialization() {  //подготавливает треки к проигрыванию и вызывает функцию загрузки их в модель
         for audioFile in audioFiles {
             if let path = Bundle.main.path(forResource: audioFile, ofType: "mp3") {
                 let url = URL(fileURLWithPath: path)
@@ -45,21 +63,25 @@ class ViewController: UIViewController {
             }
         }
     }
-
-
+    
+    func playNewAudio(index: Int) { // вызывается при открытии аудио, которое в данный момент не играет и не стоит на паузе
+        presenter.stopPlayAllAudio() // сбрасывает всю музыку на ноль, чтобы при повторнм открытии аудио играло с нуля
+        presenter.getAudioFromIndex(index: index).play()
+    }
+    
 }
 
+//MARK: - userActionMain
 extension ViewController: userActionMain {
-    func playAudio(index: Int) {
+    func playAudio(index: Int) {  // зпускает проигрывание музыки
         
-        if presenter.playingAudioCheck(index: index) == false && index != vcPlayer.currentAudio{
-            presenter.stopPlayAllAudio()
-            presenter.getAudioFromIndex(index: index).play()
-        } else {
+        if presenter.playingAudioCheck(index: index) == false && index != vcPlayer.currentAudio{ //условие, если выбранная музыка не играет в данный момент и не стоит на паузе
+            playNewAudio(index: index)
+        } else {                                                                  //если мы открываем мызыку, которая стоит на паузе
             presenter.getAudioFromIndex(index: index).play()
         }
         
-        self.present(vcPlayer, animated: true, completion: nil)
+        self.present(vcPlayer, animated: true, completion: nil)                  // всегда открываем модальное окно плеера при нажатии на трек
     }
     
     func getDurationForIndex(index: Int) -> String {
@@ -76,27 +98,24 @@ extension ViewController: userActionMain {
     
 }
 
+//MARK: - vcPlayerTovcMain
 extension ViewController: vcPlayerTovcMain {
-    func playPreviousAudio(index: Int) {
-        if index == 0 {
-            presenter.stopPlayAllAudio()
-            presenter.getAudioFromIndex(index: (presenter.getCountOfAudio() - 1)).play()
+    func playPreviousAudio(index: Int) {   // вызывается при нажатии кнопки "предыдущая музыка"
+        if index == 0 { //если сейчас играет первый трек, то открываем последний
+            playNewAudio(index: (presenter.getCountOfAudio() - 1))
             mainView.MainTableView.selectRow(at: IndexPath(row: presenter.getCountOfAudio() - 1, section: 0), animated: true, scrollPosition: .bottom)
-        } else {
-            presenter.stopPlayAllAudio()
-            presenter.getAudioFromIndex(index: index - 1).play()
+        } else { // в остальных случаях открываем предыдущий трек
+            playNewAudio(index: index - 1)
             mainView.MainTableView.selectRow(at: IndexPath(row: index - 1, section: 0), animated: true, scrollPosition: .bottom)
         }
     }
     
-    func playNextAudio(index: Int) {
-        if index == (presenter.getCountOfAudio() - 1) {
-            presenter.stopPlayAllAudio()
-            presenter.getAudioFromIndex(index: 0).play()
+    func playNextAudio(index: Int) { // вызывается при нажатии кнопки "следующий трек"
+        if index == (presenter.getCountOfAudio() - 1) { //если сейчас играет последний трек, то открываем первый
+            playNewAudio(index: 0)
             mainView.MainTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .bottom)
-        } else {
-            presenter.stopPlayAllAudio()
-            presenter.getAudioFromIndex(index: index + 1).play()
+        } else { // в остальных случаях включаем следующий трек
+            playNewAudio(index: index + 1)
             mainView.MainTableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: true, scrollPosition: .bottom)
         }
     }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol IViewControllerPlay: AnyObject {
+    func initialization()
+}
+
 protocol vcPlayerTovcMain: AnyObject {
     func getIndexPlayingAudio() -> Int
     func getDurationCurrentAudio(index: Int) -> Double
@@ -33,7 +37,12 @@ class ViewControllerPlayer: UIViewController {
     var currentAudio = Int()
     
     var durationCurrentAudio = Double()
-
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,65 +57,54 @@ class ViewControllerPlayer: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        initialization()
+        initialization()  //каждый раз при открытии окна плеера выполняем ряд действий
         
     }
+
+}
+
+//MARK: - IVewControllerPlay
+extension ViewControllerPlayer: IViewControllerPlay {
     
     func initialization() {
         
-        viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)  //меняем иконку кнопки на "пауза"
         
-        currentAudio = delegate?.getIndexPlayingAudio() ?? 0
+        currentAudio = delegate?.getIndexPlayingAudio() ?? 0   //запрашиваем трек, который начал играть
         
-        durationCurrentAudio = delegate?.getDurationCurrentAudio(index: currentAudio) ?? 0
+        durationCurrentAudio = delegate?.getDurationCurrentAudio(index: currentAudio) ?? 0   //запрашиваем длительность трека
         
+        //устанавливаем на лейблы информацию
         viewPlayer.labelDuration.text = formatter.string(from: durationCurrentAudio)
         
         viewPlayer.labelName.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[1]
         
         viewPlayer.labelAuthor.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[0]
         
+        //запускаем таймер для обновления progressView
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
         
     }
 
 }
 
-extension ViewControllerPlayer {
-    
-
-    
-    @objc func updateProgressView() {
-        viewPlayer.progresView.progress = Float((delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0)/durationCurrentAudio)
-        formatter.allowedUnits = [.minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0))
-        
-        if delegate?.playingCheck(index: currentAudio) == false && delegate?.getCurrentTimeOfIndex(index: currentAudio) == 0 {
-            delegate?.playNextAudio(index: currentAudio)
-            initialization()
-        }
-        
-    }
-}
-
+//MARK: -viewPlayerToVc
 extension ViewControllerPlayer: viewPlayerToVc {
-    func buttonBackwardPressed() {
+    func buttonBackwardPressed() {  //выызвается при нажатии кнопки "предыдущее аудио"
         delegate?.playPreviousAudio(index: currentAudio)
         initialization()
     }
     
-    func buttonForwardPressed() {
+    func buttonForwardPressed() {  //вызывается при нажатии кнопки "следующее аудио"
         delegate?.playNextAudio(index: currentAudio)
         initialization()
     }
     
-    func buttonPlayPressed() {
-        if delegate?.playingCheck(index: currentAudio) == true {
+    func buttonPlayPressed() { //вызываетс при нажатии кнопки play
+        if delegate?.playingCheck(index: currentAudio) == true { //выполняется в случае, если музыка играет сейчас
             delegate?.stopPlaying(index: currentAudio)
             viewPlayer.buttonPlay.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        } else {
+        } else {                                                //выполняется если сузыка стоит на паузе
             delegate?.continuePlay(index: currentAudio)
             viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         }
@@ -116,4 +114,26 @@ extension ViewControllerPlayer: viewPlayerToVc {
         self.dismiss(animated: true, completion: nil)
     }
     
+}
+
+//MARK: - Selectors
+private extension ViewControllerPlayer {
+    
+    @objc func updateProgressView() { //обновляем progressView
+        viewPlayer.progresView.progress = Float((delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0)/durationCurrentAudio) //вычисляем новое значение для progressView
+        //настраиваем форматтер для правильного отображения времени
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        
+        //устанавливаем текущее время музыки
+        viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(delegate?.getCurrentTimeOfIndex(index: currentAudio) ?? 0))
+        
+        //если текущая музыка не играет и не стоит на паузе, включаем следующий трек
+        if delegate?.playingCheck(index: currentAudio) == false && delegate?.getCurrentTimeOfIndex(index: currentAudio) == 0 {
+            delegate?.playNextAudio(index: currentAudio)
+            initialization()
+        }
+        
+    }
 }

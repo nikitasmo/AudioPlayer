@@ -18,7 +18,8 @@ protocol viewPlayerToVc: AnyObject {
 class ViewPlayer: UIView {
     
     weak var delegate: viewPlayerToVc?
-
+    
+//MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -39,6 +40,7 @@ class ViewPlayer: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Subviews
     var buttonClose: UIButton = {
         var button = UIButton()
         button.setTitle("X Close", for: .normal)
@@ -107,9 +109,11 @@ class ViewPlayer: UIView {
     }()
 }
 
+
+//MARK: - Private
 extension ViewPlayer {
     
-    func configConstraint() {
+    private func configConstraint() {
         buttonClose.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         buttonClose.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         buttonClose.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -147,6 +151,12 @@ extension ViewPlayer {
         buttonBackward.centerYAnchor.constraint(equalTo: buttonPlay.centerYAnchor).isActive = true
     }
     
+
+}
+
+//MARK: - Selectors
+private extension ViewPlayer {
+    
     @objc func touchCloseButton() {
         delegate?.buttonClosePressed()
     }
@@ -162,7 +172,6 @@ extension ViewPlayer {
     @objc func buttonBackwardPressed() {
         delegate?.buttonBackwardPressed()
     }
-    
 }
 
 
