@@ -9,24 +9,25 @@
 import UIKit
 
 protocol IViewControllerPlay: AnyObject {
-    func initialization()
+    func setImageButtonPlayToPause()
+    func setImageButtonPlayToPlay()
+    func setLabel(labelDuration: String, labelName: String, labelAuthor: String)
+    func updateProgressView(value: Float)
+    func updateLabelCurrentTime(value: String)
+    func changeSelectRow(index: Int)
 }
 
 protocol ViewControllerPlayerDelegate: AnyObject {
-   
+    func changeSelectRow(index: Int)
 }
 
 final class ViewControllerPlayer: UIViewController {
     
     let formatter = DateComponentsFormatter()
     
-    var timer: Timer?
-    
     weak var delegate: ViewControllerPlayerDelegate?
     
     var viewPlayer = ViewPlayer()
-    
-    var durationCurrentAudio = Double()
     
     override var shouldAutorotate: Bool {
         return false
@@ -51,7 +52,7 @@ final class ViewControllerPlayer: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        initialization()  //каждый раз при открытии окна плеера выполняем ряд действий
+        presenterPlayer.viewWillAppear()
         
     }
 
@@ -59,28 +60,37 @@ final class ViewControllerPlayer: UIViewController {
 
 //MARK: - IVewControllerPlay
 extension ViewControllerPlayer: IViewControllerPlay {
+    func changeSelectRow(index: Int) {
+        delegate?.changeSelectRow(index: index)
+    }
     
     
+    func updateLabelCurrentTime(value: String) {
+        viewPlayer.labelCurrentTime.text = value
+    }
     
-    func initialization() {
+    
+    func updateProgressView(value: Float) {
+        viewPlayer.progresView.progress = value
+    }
+    
+    //меняем иконку кнопки на "пауза"
+    func setImageButtonPlayToPause() {
+        viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+    }
+    
+    //меняем иконку кнопки на "плей"
+    func setImageButtonPlayToPlay() {
+        viewPlayer.buttonPlay.setImage(UIImage(systemName: "play.fill"), for: .normal)
+    }
+    
+    //устанавливаем на лейблы информацию
+    func setLabel(labelDuration: String, labelName: String, labelAuthor: String) {
+        viewPlayer.labelDuration.text = labelDuration
         
-        viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)  //меняем иконку кнопки на "пауза"
+        viewPlayer.labelName.text = labelName
         
-//        currentAudio = presenterPlayer.getIndexPlayingAudio()   //запрашиваем трек, который начал играть
-        ModelStorage.shared.setCurrentAudio(index: presenterPlayer.getIndexPlayingAudio())
-        
-        durationCurrentAudio = presenterPlayer.getDurationCurrentAudioDouble(index: ModelStorage.shared.getCurrentAudio())   //запрашиваем длительность трека
-        
-        //устанавливаем на лейблы информацию
-        viewPlayer.labelDuration.text = formatter.string(from: durationCurrentAudio)
-        
-        viewPlayer.labelName.text = presenterPlayer.getNameForIndex(index: ModelStorage.shared.getCurrentAudio()).components(separatedBy: " - ")[1]
-        
-        viewPlayer.labelAuthor.text = presenterPlayer.getNameForIndex(index: ModelStorage.shared.getCurrentAudio()).components(separatedBy: " - ")[0]
-        
-        //запускаем таймер для обновления progressView
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
-        
+        viewPlayer.labelAuthor.text = labelAuthor
     }
 
 }
@@ -89,23 +99,14 @@ extension ViewControllerPlayer: IViewControllerPlay {
 extension ViewControllerPlayer: viewPlayerDelegate {
     func buttonBackwardPressed() {  //выызвается при нажатии кнопки "предыдущее аудио"
         presenterPlayer.playPreviousAudio(index: ModelStorage.shared.getCurrentAudio())
-        initialization()
     }
     
     func buttonForwardPressed() {  //вызывается при нажатии кнопки "следующее аудио"
         presenterPlayer.playNextAudio(index: ModelStorage.shared.getCurrentAudio())
-        
-        initialization()
     }
     
     func buttonPlayPressed() { //вызываетс при нажатии кнопки play
-        if presenterPlayer.playingCheck(index: ModelStorage.shared.getCurrentAudio()) == true { //выполняется в случае, если музыка играет сейчас
-            presenterPlayer.stopPlaying(index: ModelStorage.shared.getCurrentAudio())
-            viewPlayer.buttonPlay.setImage(UIImage(systemName: "play.fill"), for: .normal)
-        } else {                                                //выполняется если сузыка стоит на паузе
-            presenterPlayer.continuePlay(index: ModelStorage.shared.getCurrentAudio())
-            viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-        }
+        presenterPlayer.buttonPlyaPressed()
     }
     
     func buttonClosePressed() {
@@ -114,24 +115,3 @@ extension ViewControllerPlayer: viewPlayerDelegate {
     
 }
 
-//MARK: - Selectors
-private extension ViewControllerPlayer {
-    
-    @objc func updateProgressView() { //обновляем progressView
-        viewPlayer.progresView.progress = Float((presenterPlayer.getCurrentTimeOfIndex(index: ModelStorage.shared.getCurrentAudio()))/durationCurrentAudio) //вычисляем новое значение для progressView
-        //настраиваем форматтер для правильного отображения времени
-        formatter.allowedUnits = [.minute, .second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        
-        //устанавливаем текущее время музыки
-        viewPlayer.labelCurrentTime.text = formatter.string(from: TimeInterval(presenterPlayer.getCurrentTimeOfIndex(index: ModelStorage.shared.getCurrentAudio())))
-        
-        //если текущая музыка не играет и не стоит на паузе, включаем следующий трек
-        if presenterPlayer.playingCheck(index: ModelStorage.shared.getCurrentAudio()) == false && presenterPlayer.getCurrentTimeOfIndex(index: ModelStorage.shared.getCurrentAudio()) == 0 {
-            presenterPlayer.playNextAudio(index: ModelStorage.shared.getCurrentAudio())
-            initialization()
-        }
-        
-    }
-}

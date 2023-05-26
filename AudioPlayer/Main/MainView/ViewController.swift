@@ -75,6 +75,7 @@ extension ViewController: MainViewDelegate {
 
 //MARK: - vcPlayerTovcMain
 extension ViewController: ViewControllerPlayerDelegate {
-
-    
+    func changeSelectRow(index: Int) {
+        mainView.MainTableView.selectRow(at: IndexPath(row: index, section: 0), animated: true, scrollPosition: .bottom)
+    }
 }
