@@ -14,6 +14,8 @@
 		112238BF2A1E03310000EF39 /* Karna.val - Психушка.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */; };
 		112238C32A1E25B90000EF39 /* ViewControllerPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */; };
 		112238C52A1E25D00000EF39 /* ViewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112238C42A1E25D00000EF39 /* ViewPlayer.swift */; };
+		115CB8592A20665800CA105A /* Rauf & Faik, NILETTO - Если тебе будет грустно.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 115CB8582A20665800CA105A /* Rauf & Faik, NILETTO - Если тебе будет грустно.mp3 */; };
+		115CB85B2A2066A800CA105A /* T-killah, Matara - Люби меня люби.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 115CB85A2A2066A800CA105A /* T-killah, Matara - Люби меня люби.mp3 */; };
 		118386592A1F6B6B0015F8FE /* NILETTO - Ты такая красивая.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 118386582A1F6B6B0015F8FE /* NILETTO - Ты такая красивая.mp3 */; };
 		118F38AD2A1DD3B500DB61A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */; };
 		118F38AF2A1DD3B500DB61A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118F38AE2A1DD3B500DB61A5 /* SceneDelegate.swift */; };
@@ -32,6 +34,8 @@
 		112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Karna.val - Психушка.mp3"; sourceTree = "<group>"; };
 		112238C22A1E25B90000EF39 /* ViewControllerPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerPlayer.swift; sourceTree = "<group>"; };
 		112238C42A1E25D00000EF39 /* ViewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPlayer.swift; sourceTree = "<group>"; };
+		115CB8582A20665800CA105A /* Rauf & Faik, NILETTO - Если тебе будет грустно.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Rauf & Faik, NILETTO - Если тебе будет грустно.mp3"; sourceTree = "<group>"; };
+		115CB85A2A2066A800CA105A /* T-killah, Matara - Люби меня люби.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "T-killah, Matara - Люби меня люби.mp3"; sourceTree = "<group>"; };
 		118386582A1F6B6B0015F8FE /* NILETTO - Ты такая красивая.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "NILETTO - Ты такая красивая.mp3"; sourceTree = "<group>"; };
 		118F38A92A1DD3B500DB61A5 /* AudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		118F38AC2A1DD3B500DB61A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 				112238BC2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 */,
 				112238BE2A1E03310000EF39 /* Karna.val - Психушка.mp3 */,
 				118386582A1F6B6B0015F8FE /* NILETTO - Ты такая красивая.mp3 */,
+				115CB8582A20665800CA105A /* Rauf & Faik, NILETTO - Если тебе будет грустно.mp3 */,
+				115CB85A2A2066A800CA105A /* T-killah, Matara - Люби меня люби.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -201,6 +207,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				112238BD2A1DFE490000EF39 /* Dabro - На часах ноль-ноль.mp3 in Resources */,
+				115CB85B2A2066A800CA105A /* T-killah, Matara - Люби меня люби.mp3 in Resources */,
+				115CB8592A20665800CA105A /* Rauf & Faik, NILETTO - Если тебе будет грустно.mp3 in Resources */,
 				118F38B92A1DD3B700DB61A5 /* LaunchScreen.storyboard in Resources */,
 				118F38B62A1DD3B700DB61A5 /* Assets.xcassets in Resources */,
 				112238BF2A1E03310000EF39 /* Karna.val - Психушка.mp3 in Resources */,

@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     
     let mainView = MainView()
     
-    var audioFiles = ["Dabro - На часах ноль-ноль", "Karna.val - Психушка", "NILETTO - Ты такая красивая"]
+    var audioFiles = ["Dabro - На часах ноль-ноль", "Karna.val - Психушка", "NILETTO - Ты такая красивая", "Rauf & Faik, NILETTO - Если тебе будет грустно", "T-killah, Matara - Люби меня люби"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +77,30 @@ extension ViewController: userActionMain {
 }
 
 extension ViewController: vcPlayerTovcMain {
+    func playPreviousAudio(index: Int) {
+        if index == 0 {
+            presenter.stopPlayAllAudio()
+            presenter.getAudioFromIndex(index: (presenter.getCountOfAudio() - 1)).play()
+            mainView.MainTableView.selectRow(at: IndexPath(row: presenter.getCountOfAudio() - 1, section: 0), animated: true, scrollPosition: .bottom)
+        } else {
+            presenter.stopPlayAllAudio()
+            presenter.getAudioFromIndex(index: index - 1).play()
+            mainView.MainTableView.selectRow(at: IndexPath(row: index - 1, section: 0), animated: true, scrollPosition: .bottom)
+        }
+    }
+    
+    func playNextAudio(index: Int) {
+        if index == (presenter.getCountOfAudio() - 1) {
+            presenter.stopPlayAllAudio()
+            presenter.getAudioFromIndex(index: 0).play()
+            mainView.MainTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .bottom)
+        } else {
+            presenter.stopPlayAllAudio()
+            presenter.getAudioFromIndex(index: index + 1).play()
+            mainView.MainTableView.selectRow(at: IndexPath(row: index + 1, section: 0), animated: true, scrollPosition: .bottom)
+        }
+    }
+    
     func getCurrentTimeOfIndex(index: Int) -> Double {
         presenter.getCurrentTimeOfIndex(index: index)
     }

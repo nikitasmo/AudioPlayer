@@ -16,6 +16,8 @@ protocol vcPlayerTovcMain: AnyObject {
     func stopPlaying(index: Int)
     func playingCheck(index: Int) -> Bool
     func continuePlay(index: Int)
+    func playNextAudio(index: Int)
+    func playPreviousAudio(index: Int)
 }
 
 class ViewControllerPlayer: UIViewController {
@@ -46,6 +48,12 @@ class ViewControllerPlayer: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        initialization()
+        
+    }
+    
+    func initialization() {
+        
         viewPlayer.buttonPlay.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         
         currentAudio = delegate?.getIndexPlayingAudio() ?? 0
@@ -59,6 +67,7 @@ class ViewControllerPlayer: UIViewController {
         viewPlayer.labelAuthor.text = delegate?.getNameForIndex(index: currentAudio).components(separatedBy: " - ")[0]
         
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+        
     }
 
 }
@@ -78,6 +87,16 @@ extension ViewControllerPlayer {
 }
 
 extension ViewControllerPlayer: viewPlayerToVc {
+    func buttonBackwardPressed() {
+        delegate?.playPreviousAudio(index: currentAudio)
+        initialization()
+    }
+    
+    func buttonForwardPressed() {
+        delegate?.playNextAudio(index: currentAudio)
+        initialization()
+    }
+    
     func buttonPlayPressed() {
         if delegate?.playingCheck(index: currentAudio) == true {
             delegate?.stopPlaying(index: currentAudio)

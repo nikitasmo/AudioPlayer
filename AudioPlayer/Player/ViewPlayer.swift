@@ -11,6 +11,8 @@ import UIKit
 protocol viewPlayerToVc: AnyObject {
     func buttonClosePressed()
     func buttonPlayPressed()
+    func buttonForwardPressed()
+    func buttonBackwardPressed()
 }
 
 class ViewPlayer: UIView {
@@ -27,6 +29,8 @@ class ViewPlayer: UIView {
         self.addSubview(labelDuration)
         self.addSubview(labelName)
         self.addSubview(labelAuthor)
+        self.addSubview(buttonForward)
+        self.addSubview(buttonBackward)
         
         configConstraint()
     }
@@ -85,6 +89,22 @@ class ViewPlayer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    var buttonForward: UIButton = {
+        var button = UIButton()
+        button.setImage(UIImage(systemName: "forward.fill"), for: .normal)
+        button.addTarget(self, action: #selector(buttonForwardPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    var buttonBackward: UIButton = {
+        var button = UIButton()
+        button.setImage(UIImage(systemName: "backward.fill"), for: .normal)
+        button.addTarget(self, action: #selector(buttonBackwardPressed), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 }
 
 extension ViewPlayer {
@@ -119,6 +139,12 @@ extension ViewPlayer {
         labelName.bottomAnchor.constraint(equalTo: labelAuthor.topAnchor, constant: -20).isActive = true
         labelName.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         labelName.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        
+        buttonForward.leadingAnchor.constraint(equalTo: buttonPlay.trailingAnchor, constant: 50).isActive = true
+        buttonForward.centerYAnchor.constraint(equalTo: buttonPlay.centerYAnchor).isActive = true
+        
+        buttonBackward.trailingAnchor.constraint(equalTo: buttonPlay.leadingAnchor, constant: -50).isActive = true
+        buttonBackward.centerYAnchor.constraint(equalTo: buttonPlay.centerYAnchor).isActive = true
     }
     
     @objc func touchCloseButton() {
@@ -127,6 +153,14 @@ extension ViewPlayer {
     
     @objc func buttonPlayPressed() {
         delegate?.buttonPlayPressed()
+    }
+    
+    @objc func buttonForwardPressed() {
+        delegate?.buttonForwardPressed()
+    }
+    
+    @objc func buttonBackwardPressed() {
+        delegate?.buttonBackwardPressed()
     }
     
 }
